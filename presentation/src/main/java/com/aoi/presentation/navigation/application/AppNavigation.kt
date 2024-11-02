@@ -4,10 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aoi.presentation.sign_up.SignUpScreen
+import com.aoi.presentation.sign_up.submitting_email.SubmittingEmailScreen
 
 sealed class AppNavigation(val route: String) {
-    data object SignUp : AppNavigation("sign_up")
+    data object SubmittingEmail : AppNavigation("submitting_email")
+    data object VerifyingToken : AppNavigation("verifying_token")
+    data object RegisteringAccount : AppNavigation("registering_account")
     data object SignIn : AppNavigation("sign_in")
 }
 
@@ -17,10 +19,16 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = AppNavigation.SignUp.route
+        startDestination = AppNavigation.SubmittingEmail.route
     ) {
-        composable(AppNavigation.SignUp.route) {
-            SignUpScreen()
+        composable(AppNavigation.SubmittingEmail.route) {
+            SubmittingEmailScreen()
+        }
+        composable(AppNavigation.VerifyingToken.route) {
+            //VerifyingTokenScreen()
+        }
+        composable(AppNavigation.RegisteringAccount.route) {
+            //RegisteringAccountScreen()
         }
         composable(AppNavigation.SignIn.route) {
             //SignInScreen()
