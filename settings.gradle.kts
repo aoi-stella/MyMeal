@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "mymeal"
 include(":app")
 include(":core")
+include(":presentation")
