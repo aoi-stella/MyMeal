@@ -244,12 +244,7 @@ fun MymealTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {dynamicColor ->
-        {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
+    val colorScheme = when {
         darkTheme -> darkScheme
         else -> lightScheme
     }
