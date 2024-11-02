@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sign_up_welcome_message">Welcome to\nマイミル!</string>
+    <string name="sign_up_encourage_registering_email_address">メールアドレスを入力</string>
+    <string name="sign_up_placeholder_email">メールアドレス</string>
+    <string name="sign_up_submit_email">認証コードを送信</string>
+    <string name="sign_up_divide_or">or</string>
+    <string name="sign_up_inquire_already_has_account">既にアカウントがありますか？</string>
+    <string name="sign_up_navigate_to_sign_in">サインイン画面に移動</string>
+</resources>
