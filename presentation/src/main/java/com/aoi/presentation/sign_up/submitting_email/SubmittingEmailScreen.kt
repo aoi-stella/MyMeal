@@ -1,4 +1,4 @@
-package com.aoi.presentation.sign_up
+package com.aoi.presentation.sign_up.submitting_email
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -29,7 +29,7 @@ import com.aoi.core.ui.modifier.MyMealModifier
 import com.aoi.core.ui.spacing.MyMealSpacing
 
 @Composable
-fun SignUpScreen() {
+fun SubmittingEmailScreen() {
     Surface(modifier = MyMealModifier.screenParentModifier.background(MaterialTheme.colorScheme.surface)) {
         Column(
             modifier = MyMealModifier.screenTopChildColumnModifier,
@@ -95,6 +95,6 @@ fun SignUpScreen() {
 
 @Composable
 @Preview
-fun SignUpScreenPreview() {
-    SignUpScreen()
+fun SubmittingEmailScreenPreview() {
+    SubmittingEmailScreen()
 }
