@@ -1,4 +1,4 @@
-package com.aoi.mymeal.ui.theme
+package com.aoi.core.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
