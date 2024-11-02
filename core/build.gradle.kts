@@ -43,6 +43,7 @@ dependencies {
     implementation(libs.androidx.material3)
     // compose[デバッグ]
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.test.android)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     // unit test
