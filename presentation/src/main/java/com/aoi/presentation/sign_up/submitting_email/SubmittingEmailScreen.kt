@@ -9,6 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aoi.core.R
 import com.aoi.core.ui.components.button.outline_button.OutlineButton
 import com.aoi.core.ui.components.button.outline_button.OutlineButtonState
@@ -29,12 +33,28 @@ import com.aoi.core.ui.modifier.MyMealModifier
 import com.aoi.core.ui.spacing.MyMealSpacing
 
 @Composable
-fun SubmittingEmailScreen() {
+fun SubmittingEmailScreen(
+    vm: SubmittingEmailScreenViewModel = viewModel(),
+    onNavigateToSignInScreen: () -> Unit,
+    onNavigateToVerifyingTokenScreen: () -> Unit){
+    LaunchedEffect(Unit) {
+        vm.setClickEventOnNavigateToVerifyEmailButton(onNavigateToVerifyingTokenScreen)
+        vm.setClickEventOnNavigateToSignInButton(onNavigateToSignInScreen)
+    }
+    val state by vm.state.collectAsState()
+    SubmittingEmailScreen(state = state)
+}
+
+@Composable
+fun SubmittingEmailScreen(state: SubmittingEmailScreenState) {
     Surface(modifier = MyMealModifier.screenParentModifier.background(MaterialTheme.colorScheme.surface)) {
         Column(
             modifier = MyMealModifier.screenTopChildColumnModifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val emailErrorMessage = state.emailErrorMessage?.let { stringResource(it) }
+            val isEmailError = emailErrorMessage != null
+
             Text(
                 text = stringResource(R.string.sign_up_welcome_message),
                 color = MaterialTheme.colorScheme.primary,
@@ -50,20 +70,20 @@ fun SubmittingEmailScreen() {
                 modifier = Modifier.padding(top = MyMealSpacing.sectionLarge))
             MyMealUserInputForm(
                 state = MyMealUserInputFormState(
-                    value = "",
-                    onValueChange = {},
+                    value = state.email,
+                    onValueChange = state.onEmailChange,
                     placeholder = stringResource(R.string.sign_up_placeholder_email),
+                    errorMessage = emailErrorMessage,
+                    isError = isEmailError,
                     modifier = Modifier.padding(top = MyMealSpacing.sectionMedium, bottom = MyMealSpacing.componentLarge),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Email
-                    )
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
                 )
             )
             PrimaryButton(
                 state = PrimaryButtonState(
                     text = stringResource(R.string.sign_up_submit_email),
-                    onClick = {},
-                    enabled = true,
+                    onClick = state.onNavigateVerifyingEmailScreen,
+                    enabled = state.isEmailValid,
                     modifier = Modifier.fillMaxWidth()
                 )
             )
@@ -83,8 +103,7 @@ fun SubmittingEmailScreen() {
             OutlineButton(
                 state = OutlineButtonState(
                     text = stringResource(R.string.sign_up_navigate_to_sign_in),
-                    onClick = {},
-                    enabled = true,
+                    onClick = state.onNavigateToSignInScreen,
                     modifier = Modifier.fillMaxWidth().padding(top = MyMealSpacing.componentMedium)
                 )
             )
@@ -92,9 +111,13 @@ fun SubmittingEmailScreen() {
     }
 }
 
-
 @Composable
 @Preview
 fun SubmittingEmailScreenPreview() {
-    SubmittingEmailScreen()
+    SubmittingEmailScreen(
+        SubmittingEmailScreenState(
+            email = "",
+            onEmailChange = {}
+        )
+    )
 }

@@ -7,4 +7,5 @@
     <string name="sign_up_divide_or">or</string>
     <string name="sign_up_inquire_already_has_account">既にアカウントがありますか？</string>
     <string name="sign_up_navigate_to_sign_in">サインイン画面に移動</string>
+    <string name="sign_up_error_message_invalid_email">無効なメールアドレスです</string>
 </resources>
