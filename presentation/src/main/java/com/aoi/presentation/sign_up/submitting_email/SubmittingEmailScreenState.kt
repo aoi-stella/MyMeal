@@ -10,7 +10,6 @@ package com.aoi.presentation.sign_up.submitting_email
  * @property onNavigateVerifyingEmailScreen メールアドレスが有効であるときの処理
  * @property onNavigateToSignInScreen サインイン画面に遷移するときの処理
  */
-// test
 data class SubmittingEmailScreenState(
     val email: String,
     val emailErrorMessage: Int? = null,
