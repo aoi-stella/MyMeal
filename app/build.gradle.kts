@@ -1,3 +1,7 @@
+import flavor_type.DevelopFlavorType
+import flavor_type.ProductionFlavorType
+import flavor_type.StagingFlavorType
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -21,16 +25,6 @@ android {
             useSupportLibrary = true
         }
     }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -47,6 +41,38 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+
+    buildTypes {
+        getByName(BuildConfig.BuildTypes.RELEASE) {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+
+        getByName(BuildConfig.BuildTypes.DEBUG) {
+            applicationIdSuffix = BuildConfig.ApplicationIdSuffix.DEBUG
+            isDebuggable = true
+        }
+    }
+
+    val flavorTypes = listOf(
+        DevelopFlavorType(),
+        StagingFlavorType(),
+        ProductionFlavorType()
+    )
+
+    flavorDimensions += BuildConfig.Flavor.FlavorDimensions.getListOfFlavorDimensions()
+    productFlavors {
+        flavorTypes.forEach { flavorType ->
+            create(flavorType.flavorName) {
+                dimension = flavorType.dimension
+                applicationIdSuffix = flavorType.applicationIdSuffix
+                versionNameSuffix = flavorType.versionNameSuffix
+            }
         }
     }
 }
